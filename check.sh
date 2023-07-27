@@ -17,7 +17,7 @@ if [[ -f $problem_file ]]; then
     if [[ $output -eq $result ]]; then
         echo "${output} is correct."
     else
-        echo "${output} is incorrect."
+        echo "${output} is incorrect. Expected: ${result}"
     fi
 else
     echo $problem_file 'does not exist'
