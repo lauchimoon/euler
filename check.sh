@@ -5,7 +5,7 @@ if [[ -f $problem_file ]]; then
     ext="${problem_file##*.}"
     output=""
     if [[ $ext = 'c' ]]; then
-        gcc $problem_file -lm -o out
+        gcc $problem_file -lm -lgmp -o out
         output=$(./out)
         rm out
     elif [[ $ext = 'py' ]]; then
