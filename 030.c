@@ -1,12 +1,13 @@
 // 443839
 #include <stdio.h>
-#include <math.h>
+
+#define fifth(x) (x)*(x)*(x)*(x)*(x)
 
 int sum(int n)
 {
     int s = 0;
     while (n != 0) {
-        s += pow(n%10, 5);
+        s += fifth(n%10);
         n /= 10;
     }
 
