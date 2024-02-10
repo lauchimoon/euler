@@ -18,7 +18,8 @@ int main()
 {
     int idx = 0;
     int n = 0;
-    for (int i = 2; idx < 10001; i++) {
+    int target = 10001;
+    for (int i = 2; idx < target; i++) {
         idx += is_prime(i);
         n = i*is_prime(i);
     }

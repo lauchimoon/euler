@@ -5,7 +5,7 @@ if [[ ! -f $problem_file ]]; then
     exit 0
 fi
 
-result=$(head -n 1 $problem_file | grep -E -o '[0-9.]+')
+result=$(head -n 1 $problem_file | grep -E -o '[0-9.-]+')
 ext="${problem_file##*.}"
 
 if [[ $ext != 'c' ]]; then # non-c solutions are not allowed!

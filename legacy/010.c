@@ -28,6 +28,6 @@ int main()
         }
     }
 
-    printf("%ld\n", sum);
+    printf("%lld\n", sum);
     return 0;
 }
