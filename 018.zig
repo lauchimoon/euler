@@ -1,6 +1,6 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
-const data = @embedFile("./0018_triangle.txt");
+const data = @embedFile("./resources/0018_triangle.txt");
 const common = @import("common");
 
 fn solve(triangle: [][]u16) u64 {
