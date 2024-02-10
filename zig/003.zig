@@ -21,8 +21,7 @@ fn max_list(list: std.ArrayList(u64)) u64 {
 }
 
 fn solve(n: u64) anyerror!u64 {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
+    const allocator = std.heap.page_allocator;
     var factors = std.ArrayList(u64).init(allocator);
     defer factors.deinit();
 

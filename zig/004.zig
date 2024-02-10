@@ -22,8 +22,7 @@ fn max_list(list: std.ArrayList(u64)) u64 {
 }
 
 fn solve(start: u64, end: u64) anyerror!u64 {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    const allocator = gpa.allocator();
+    const allocator = std.heap.page_allocator;
 
     var palindromes = std.ArrayList(u64).init(allocator);
     defer palindromes.deinit();

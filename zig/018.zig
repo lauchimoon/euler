@@ -16,9 +16,7 @@ fn solve(triangle: [][]u16) u64 {
 }
 
 pub fn main() !void {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    var allocator = gpa.allocator();
-    defer _ = gpa.deinit();
+    var allocator = std.heap.page_allocator;
 
     var triangle = try common.load_triangle(&allocator, data);
     try stdout.print("{}\n", .{solve(triangle)});
