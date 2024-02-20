@@ -1,7 +1,7 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 
-fn sum_arr(arr: [100]u256) u256 {
+fn sumArr(arr: [100]u256) u256 {
     var sum: u256 = 0;
     for (arr) |element| {
         sum += element;
@@ -113,7 +113,7 @@ fn solve() []const u8 {
         20849603980134001723930671666823555245252804609722,
         53503534226472524250874054075591789781264330331690,
     };
-    const sum: u256 = comptime sum_arr(numbers);
+    const sum: u256 = comptime sumArr(numbers);
     const answer = comptime std.fmt.comptimePrint("{}", .{sum});
 
     return answer[0..10];

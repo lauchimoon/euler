@@ -1,7 +1,7 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 
-fn collatz_att(n: u64) u64 {
+fn collatzAtt(n: u64) u64 {
     var term: u64 = n;
     var attempts: u64 = 0;
 
@@ -23,7 +23,7 @@ fn solve(limit: u64) u64 {
     var answer: u64 = 0;
 
     for (5..limit) |i| {
-        const attempts: u64 = collatz_att(i);
+        const attempts: u64 = collatzAtt(i);
         if (attempts > max) {
             max = attempts;
             answer = i;

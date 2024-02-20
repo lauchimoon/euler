@@ -1,5 +1,6 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
+const common = @import("common");
 
 fn up(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     for (0..19) |y| {
@@ -25,7 +26,7 @@ fn right(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     }
 }
 
-fn d_upright(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
+fn dUpRight(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     for (3..19) |y| {
         for (0..16) |x| {
             const prod = numbers[y][x]*numbers[y - 1][x + 1]*numbers[y - 2][x + 2]*numbers[y - 3][x + 3];
@@ -34,7 +35,7 @@ fn d_upright(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     }
 }
 
-fn d_upleft(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
+fn dUpLeft(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     for (3..19) |y| {
         for (3..19) |x| {
             const prod = numbers[y][x]*numbers[y - 1][x - 1]*numbers[y - 2][x - 2]*numbers[y - 3][x - 3];
@@ -43,7 +44,7 @@ fn d_upleft(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     }
 }
 
-fn d_downleft(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
+fn dDownLeft(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     for (0..16) |y| {
         for (3..19) |x| {
             const prod = numbers[y][x]*numbers[y + 1][x - 1]*numbers[y + 2][x - 2]*numbers[y + 3][x - 3];
@@ -52,7 +53,7 @@ fn d_downleft(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     }
 }
 
-fn d_downright(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
+fn dDownRight(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     for (0..16) |y| {
         for (0..16) |x| {
             const prod = numbers[y][x]*numbers[y + 1][x + 1]*numbers[y + 2][x + 2]*numbers[y + 3][x + 3];
@@ -61,16 +62,7 @@ fn d_downright(numbers: [20][20]u32, prods: *std.ArrayList(u32)) !void {
     }
 }
 
-fn max_list(list: std.ArrayList(u32)) u32 {
-    var m: u32 = 0;
-    for (list.items) |item| {
-        m = @max(m, item);
-    }
-
-    return m;
-}
-
-fn solve() anyerror!u32 {
+fn solve() !u32 {
     var numbers = [20][20]u32{
         [_]u32{ 8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8, },
         [_]u32{ 49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 4, 56, 62, 0, },
@@ -102,14 +94,15 @@ fn solve() anyerror!u32 {
     // will be the same.
     try up(numbers, &prods);
     try right(numbers, &prods);
-    try d_upright(numbers, &prods);
-    try d_upleft(numbers, &prods);
-    try d_downleft(numbers, &prods);
-    try d_downright(numbers, &prods);
+    try dUpRight(numbers, &prods);
+    try dUpLeft(numbers, &prods);
+    try dDownLeft(numbers, &prods);
+    try dDownRight(numbers, &prods);
 
-    return max_list(prods);
+    return common.maxList(u32, prods);
 }
 
 pub fn main() !void {
-    try stdout.print("{!}\n", .{solve()});
+    const solution = try solve();
+    try stdout.print("{}\n", .{solution});
 }

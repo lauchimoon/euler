@@ -2,15 +2,6 @@ const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 const common = @import("common");
 
-fn max_list(list: std.ArrayList(u64)) u64 {
-    var m: u64 = 0;
-    for (list.items) |item| {
-        m = @max(m, item);
-    }
-
-    return m;
-}
-
 fn solve(n: u64) !u64 {
     const allocator = std.heap.page_allocator;
     var arr = std.ArrayList(u64).init(allocator);
@@ -23,7 +14,7 @@ fn solve(n: u64) !u64 {
         try arr.append(m);
     }
 
-    return max_list(arr);
+    return common.maxList(u64, arr);
 }
 
 pub fn main() !void {

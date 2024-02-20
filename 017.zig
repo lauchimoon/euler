@@ -19,7 +19,7 @@ fn unit(comptime n: u64) []const u8 {
     }
 }
 
-fn unique_two_digit(comptime n: u64) []const u8 {
+fn uniqueTwoDigit(comptime n: u64) []const u8 {
     switch (n) {
         10 => return "ten",
         11 => return "eleven",
@@ -35,7 +35,7 @@ fn unique_two_digit(comptime n: u64) []const u8 {
     }
 }
 
-fn two_digit(comptime n: u64) []const u8 {
+fn twoDigit(comptime n: u64) []const u8 {
     const prefixes = comptime [8][]const u8{
         "twenty","thirty", "forty",
         "fifty", "sixty", "seventy",
@@ -48,7 +48,7 @@ fn two_digit(comptime n: u64) []const u8 {
     if (first == 0) {
         return unit(second);
     } else if (first == 1 and (second >= 0 and second <= 9)) {
-        return unique_two_digit(n);
+        return uniqueTwoDigit(n);
     } else if (second == 0) {
         return prefixes[first - 2];
     } else {
@@ -57,7 +57,7 @@ fn two_digit(comptime n: u64) []const u8 {
     }
 }
 
-fn three_digit(comptime n: u64) []const u8 {
+fn threeDigit(comptime n: u64) []const u8 {
     const first = comptime n/100;
     const last_two = comptime n%100;
 
@@ -65,16 +65,16 @@ fn three_digit(comptime n: u64) []const u8 {
     if (last_two == 0) {
         return num;
     } else {
-        return num ++ "and" ++ comptime two_digit(last_two);
+        return num ++ "and" ++ comptime twoDigit(last_two);
     }
 }
 
-fn n_to_word(comptime n: u64) []const u8 {
+fn nToWord(comptime n: u64) []const u8 {
     switch (n) {
         0...9 => return unit(n),
-        10...19 => return unique_two_digit(n),
-        20...99 => return two_digit(n),
-        100...999 => return three_digit(n),
+        10...19 => return uniqueTwoDigit(n),
+        20...99 => return twoDigit(n),
+        100...999 => return threeDigit(n),
         1000 => return "onethousand",
         else => return "unknown",
     }
@@ -84,7 +84,7 @@ fn solve(comptime n: u64) u64 {
     comptime var i: u64 = 1;
     var total: u64 = 0;
     inline while (i <= n) : (i += 1) { // For some reason you cannot exceed 1000 loops. Lol!
-        total += n_to_word(i).len;
+        total += nToWord(i).len;
     }
 
     return total;

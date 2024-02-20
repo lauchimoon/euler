@@ -2,11 +2,11 @@ const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 const data = @embedFile("./resources/0022_names.txt");
 
-fn compare_strings(_: void, lhs: []const u8, rhs: []const u8) bool {
+fn compareStrings(_: void, lhs: []const u8, rhs: []const u8) bool {
     return std.mem.order(u8, lhs, rhs).compare(std.math.CompareOperator.lt);
 }
 
-fn split_str(str: []const u8, delimiter: []const u8, allocator: std.mem.Allocator) !std.ArrayList([]const u8) {
+fn splitStr(str: []const u8, delimiter: []const u8, allocator: std.mem.Allocator) !std.ArrayList([]const u8) {
     var list = std.ArrayList([]const u8).init(allocator);
     var split = std.mem.split(u8, str, delimiter);
     while (split.next()) |item| {
@@ -16,7 +16,7 @@ fn split_str(str: []const u8, delimiter: []const u8, allocator: std.mem.Allocato
     return list;
 }
 
-fn name_score(name: []const u8, index: u64) u64 {
+fn nameScore(name: []const u8, index: u64) u64 {
     var score: u64 = 0;
 
     for (1..name.len - 1) |i| {
@@ -32,15 +32,15 @@ fn name_score(name: []const u8, index: u64) u64 {
 
 fn solve() !u64 {
     const allocator = std.heap.page_allocator;
-    var split = try split_str(data, ",", allocator);
+    var split = try splitStr(data, ",", allocator);
     defer split.deinit();
 
-    std.sort.insertion([]const u8, split.items, {}, compare_strings);
+    std.sort.insertion([]const u8, split.items, {}, compareStrings);
 
     var total: u64 = 0;
 
     for (split.items, 0..) |name, i| {
-        total += name_score(name, i + 1);
+        total += nameScore(name, i + 1);
     }
 
     return total;

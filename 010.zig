@@ -1,7 +1,7 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 
-fn is_prime(n: u64) bool {
+fn isPrime(n: u64) bool {
     var nf: f64 = @floatFromInt(n);
     var limit: u64 = @intFromFloat(nf);
     for (2..limit) |i| {
@@ -13,15 +13,19 @@ fn is_prime(n: u64) bool {
     return true;
 }
 
-pub fn main() !void {
-    const n = 2000000;
+fn solve(n: u64) u64 {
     var sum: u64 = 0;
 
     for (2..n) |i| {
-        if (is_prime(i)) {
+        if (isPrime(i)) {
             sum += i;
         }
     }
 
-    try stdout.print("{}\n", .{sum});
+    return sum;
+}
+
+pub fn main() !void {
+    const n = 2000000;
+    try stdout.print("{}\n", .{solve(n)});
 }

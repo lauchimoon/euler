@@ -1,7 +1,7 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 
-fn mul_digits(slice: []const u8) u64 {
+fn mulDigits(slice: []const u8) u64 {
     var total: u64 = 1;
 
     for (slice) |digit| {
@@ -19,7 +19,7 @@ fn solve(offset: u64) u64 {
     while (n + 13 <= num.len) {
         const offset0 = n + offset;
         const slice = num[n..offset0];
-        const prod = mul_digits(slice);
+        const prod = mulDigits(slice);
         if (prod > max) {
             max = prod;
         }

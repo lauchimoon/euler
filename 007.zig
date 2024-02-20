@@ -1,7 +1,7 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 
-fn is_prime(n: u64) bool {
+fn isPrime(n: u64) bool {
     for (2..n) |i| {
         if (@mod(n, i) == 0) {
             return false;
@@ -16,7 +16,7 @@ fn solve(comptime idx: u64) u64 {
     var p_idx: u64 = 0;
     var n: u64 = 2;
     while (p_idx < idx) {
-        if (is_prime(n)) {
+        if (isPrime(n)) {
             primes[p_idx] = n;
             p_idx += 1;
         }

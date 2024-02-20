@@ -1,7 +1,7 @@
 const std = @import("std");
 const pow = std.math.pow;
 
-pub fn load_triangle(allocator: *std.mem.Allocator, data: []const u8) ![][]u16 {
+pub fn loadTriangle(allocator: *std.mem.Allocator, data: []const u8) ![][]u16 {
     var lines = std.mem.split(u8, data, "\n");
     var line_count: usize = 0;
     while (lines.next()) |_| {
@@ -36,7 +36,7 @@ pub fn load_triangle(allocator: *std.mem.Allocator, data: []const u8) ![][]u16 {
     return triangle;
 }
 
-pub fn unload_triangle(triangle: [][]u16, allocator: *std.mem.Allocator) void {
+pub fn unloadTriangle(triangle: [][]u16, allocator: *std.mem.Allocator) void {
     free2d(u16, triangle, allocator);
 }
 
@@ -81,6 +81,15 @@ pub fn sumDiv(n: u64) !u64 {
     }
 
     return sd - n;
+}
+
+pub fn maxList(comptime T: type, list: std.ArrayList(T)) T {
+    var m: T = 0;
+    for (list.items) |item| {
+        m = @max(m, item);
+    }
+
+    return m;
 }
 
 fn alloc2d(comptime T: type, width: usize, height: usize, allocator: *std.mem.Allocator) ![][]T {

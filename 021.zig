@@ -19,7 +19,7 @@ fn d(n: u64) u64 {
     }
 }
 
-fn are_amicable(a: u64, b: u64) bool {
+fn areAmicable(a: u64, b: u64) bool {
     return (d(a) == b and d(b) == a);
 }
 
@@ -28,7 +28,7 @@ fn solve(limit: u64) u64 {
 
     for (1..limit) |a| {
         for (1..limit) |b| {
-            if (a != b and are_amicable(a, b)) {
+            if (a != b and areAmicable(a, b)) {
                 answer += a + b;
             }
         }
