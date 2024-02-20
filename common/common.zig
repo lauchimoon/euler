@@ -66,8 +66,8 @@ pub fn sumDiv(n: u64) !u64 {
     }
 
     for (coeffs.items) |coeff| {
-        if (powers.get(coeff)) |_| {
-            try powers.put(coeff, powers.get(coeff).? + 1);
+        if (powers.get(coeff)) |p| {
+            try powers.put(coeff, p + 1);
         } else {
             try powers.put(coeff, 1);
         }
@@ -109,8 +109,8 @@ pub fn nDivs(n: u64) !u64 {
     }
 
     for (coeffs.items) |coeff| {
-        if (powers.get(coeff)) |_| {
-            try powers.put(coeff, powers.get(coeff).? + 1);
+        if (powers.get(coeff)) |p| {
+            try powers.put(coeff, p + 1);
         } else {
             try powers.put(coeff, 1);
         }
