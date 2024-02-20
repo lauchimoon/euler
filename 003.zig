@@ -1,5 +1,6 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
+const common = @import("common");
 
 fn max_list(list: std.ArrayList(u64)) u64 {
     var m: u64 = 0;
@@ -10,15 +11,6 @@ fn max_list(list: std.ArrayList(u64)) u64 {
     return m;
 }
 
-fn minDiv(n: u64) u64 {
-    var min: u64 = 2;
-    while (true) : (min += 1) {
-        if (@mod(n, min) == 0) {
-            return min;
-        }
-    }
-}
-
 fn solve(n: u64) !u64 {
     const allocator = std.heap.page_allocator;
     var arr = std.ArrayList(u64).init(allocator);
@@ -26,7 +18,7 @@ fn solve(n: u64) !u64 {
     var n0: u64 = n;
 
     while (n0 > 1) {
-        var m = minDiv(n0);
+        var m = common.minDiv(n0);
         n0 /= m;
         try arr.append(m);
     }

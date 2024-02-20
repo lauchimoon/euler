@@ -1,4 +1,5 @@
 const std = @import("std");
+const pow = std.math.pow;
 
 pub fn load_triangle(allocator: *std.mem.Allocator, data: []const u8) ![][]u16 {
     var lines = std.mem.split(u8, data, "\n");
@@ -37,6 +38,49 @@ pub fn load_triangle(allocator: *std.mem.Allocator, data: []const u8) ![][]u16 {
 
 pub fn unload_triangle(triangle: [][]u16, allocator: *std.mem.Allocator) void {
     free2d(u16, triangle, allocator);
+}
+
+pub fn minDiv(n: u64) u64 {
+    var min: u64 = 2;
+    while (true) : (min += 1) {
+        if (@mod(n, min) == 0) {
+            return min;
+        }
+    }
+}
+
+pub fn sumDiv(n: u64) !u64 {
+    const allocator = std.heap.page_allocator;
+    var coeffs = std.ArrayList(u64).init(allocator);
+    var powers = std.AutoHashMap(u64, u64).init(allocator);
+    defer coeffs.deinit();
+    defer powers.deinit();
+
+    var sd: u64 = 1;
+    var n0: u64 = n;
+
+    while (n0 > 1) {
+        var m = minDiv(n0);
+        n0 /= m;
+        try coeffs.append(m);
+    }
+
+    for (coeffs.items) |coeff| {
+        if (powers.get(coeff)) |_| {
+            try powers.put(coeff, powers.get(coeff).? + 1);
+        } else {
+            try powers.put(coeff, 1);
+        }
+    }
+
+    var it = powers.iterator();
+    while (it.next()) |item| {
+        const coeff = item.key_ptr.*;
+        const power = item.value_ptr.*;
+        sd *= (pow(u64, coeff, power + 1) - 1)/(coeff - 1);
+    }
+
+    return sd - n;
 }
 
 fn alloc2d(comptime T: type, width: usize, height: usize, allocator: *std.mem.Allocator) ![][]T {
