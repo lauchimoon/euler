@@ -1,7 +1,7 @@
 const std = @import("std");
 const stdout = std.io.getStdOut().writer();
 
-fn sum_digits_square(n: u64) u64 {
+fn sumDigitsSquare(n: u64) u64 {
     var sum: u64 = 0;
     var ndigits: u64 = 0;
     var n0 = n;
@@ -20,16 +20,14 @@ fn sum_digits_square(n: u64) u64 {
 }
 
 fn solve(limit: u64) !u64 {
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    var allocator = gpa.allocator();
-    defer _ = gpa.deinit();
+    const allocator = std.heap.page_allocator;
     var list = std.ArrayList(u64).init(allocator);
     defer list.deinit();
 
     var starting: u64 = 1;
     var n: u64 = starting;
     while (starting <= limit) {
-        n = sum_digits_square(n);
+        n = sumDigitsSquare(n);
 
         if (n == 1) {
             starting += 1;
@@ -47,5 +45,6 @@ fn solve(limit: u64) !u64 {
 }
 
 pub fn main() !void {
-    try stdout.print("{!}\n", .{solve(10000000)});
+    const solution = try solve(10000000);
+    try stdout.print("{}\n", .{solution});
 }
