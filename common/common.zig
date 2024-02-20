@@ -92,6 +92,39 @@ pub fn maxList(comptime T: type, list: std.ArrayList(T)) T {
     return m;
 }
 
+pub fn nDivs(n: u64) !u64 {
+    const allocator = std.heap.page_allocator;
+    var coeffs = std.ArrayList(u64).init(allocator);
+    var powers = std.AutoHashMap(u64, u64).init(allocator);
+    defer coeffs.deinit();
+    defer powers.deinit();
+
+    var nd: u64 = 1;
+    var n0: u64 = n;
+
+    while (n0 > 1) {
+        var m = minDiv(n0);
+        n0 /= m;
+        try coeffs.append(m);
+    }
+
+    for (coeffs.items) |coeff| {
+        if (powers.get(coeff)) |_| {
+            try powers.put(coeff, powers.get(coeff).? + 1);
+        } else {
+            try powers.put(coeff, 1);
+        }
+    }
+
+    var it = powers.iterator();
+    while (it.next()) |item| {
+        const power = item.value_ptr.*;
+        nd *= power + 1;
+    }
+
+    return nd;
+}
+
 fn alloc2d(comptime T: type, width: usize, height: usize, allocator: *std.mem.Allocator) ![][]T {
     var array = try allocator.alloc([]T, height);
     for (array, 0..) |_, i| {
