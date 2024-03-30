@@ -60,7 +60,7 @@ pub fn sumDiv(n: u64) !u64 {
     var n0: u64 = n;
 
     while (n0 > 1) {
-        var m = minDiv(n0);
+        const m = minDiv(n0);
         n0 /= m;
         try coeffs.append(m);
     }
@@ -103,7 +103,7 @@ pub fn nDivs(n: u64) !u64 {
     var n0: u64 = n;
 
     while (n0 > 1) {
-        var m = minDiv(n0);
+        const m = minDiv(n0);
         n0 /= m;
         try coeffs.append(m);
     }
@@ -123,6 +123,17 @@ pub fn nDivs(n: u64) !u64 {
     }
 
     return nd;
+}
+
+pub fn isPalindrome(n: u64) bool {
+    var reverse: u64 = 0;
+    var n0: u64 = n;
+    while (n0 != 0) {
+        reverse = (reverse * 10) + (@mod(n0, 10));
+        n0 /= 10;
+    }
+
+    return reverse == n;
 }
 
 fn alloc2d(comptime T: type, width: usize, height: usize, allocator: *std.mem.Allocator) ![][]T {

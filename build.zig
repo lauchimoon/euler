@@ -1,7 +1,7 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    const target = std.zig.CrossTarget{ .os_tag = .linux, .cpu_arch = .x86_64 };
+    const target = b.standardTargetOptions(.{});
     const file = b.option([]const u8, "problem", "Get the solution for a specific problem") orelse "001.zig";
 
     const exe = b.addExecutable(.{
@@ -9,10 +9,10 @@ pub fn build(b: *std.Build) void {
         .root_source_file = .{ .path = file },
         .target = target,
     });
-    const common = b.addModule("common", .{.source_file = .{.path = "./common/common.zig"}});
+    const common = b.addModule("common", .{.root_source_file = .{.path = "./common/common.zig"}});
 
     b.installArtifact(exe);
-    exe.addModule("common", common);
+    exe.root_module.addImport("common", common);
 
     const run = b.addRunArtifact(exe);
     const run_step = b.step("run", "Run the application");
