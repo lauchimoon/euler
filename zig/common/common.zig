@@ -83,6 +83,17 @@ pub fn sumDiv(n: u64) !u64 {
     return sd - n;
 }
 
+pub fn sumDivSimple(n: u64) u64 {
+    var sum: u64 = 0;
+    for (1..n/2 + 1) |i| {
+        if (n % i == 0) {
+            sum += i;
+        }
+    }
+
+    return sum;
+}
+
 pub fn maxList(comptime T: type, list: std.ArrayList(T)) T {
     var m: T = 0;
     for (list.items) |item| {
@@ -134,6 +145,16 @@ pub fn isPalindrome(n: u64) bool {
     }
 
     return reverse == n;
+}
+
+pub fn isPalindromeStr(s: []const u8) bool {
+    for (0..s.len) |i| {
+        if (s[i] != s[s.len - i - 1]) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 fn alloc2d(comptime T: type, width: usize, height: usize, allocator: *std.mem.Allocator) ![][]T {

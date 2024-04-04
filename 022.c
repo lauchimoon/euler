@@ -32,7 +32,7 @@ int main()
     char line[LINE_SZ] = { 0 };
     const char *names[N_NAMES] = {};
     char *tok = NULL;
-    FILE *f = fopen("ext/0022_names.txt", "r");
+    FILE *f = fopen("resources/0022_names.txt", "r");
     int total_score = 0;
     const char *delim = ",";
 

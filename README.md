@@ -1,4 +1,5 @@
-# euler
-My project euler solutions
+# My project euler solutions
 
-Check `legacy` directory for solutions in C.
+check.sh: solution checker for the problems.
+Dependencies:
+    - libgmp: bigint business

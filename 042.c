@@ -32,7 +32,7 @@ int main()
     char line[LINE_SZ] = { 0 };
     const char *words[N_WORDS] = {};
     char *tok = NULL;
-    FILE *f = fopen("ext/0042_words.txt", "r");
+    FILE *f = fopen("resources/0042_words.txt", "r");
     int n = 0;
     const char *delim = ",";
 
