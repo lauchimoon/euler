@@ -1,44 +1,40 @@
 // 1074
 #include <stdio.h>
 
+#define EULER_COMMON_IMPLEMENTATION
+#include "common.h"
+
 int max(int a, int b)
 {
     return (a > b)? a : b;
 }
 
+int triangle_at(int *triangle, int x, int y, int width, int height)
+{
+    if (x >= 0 && x < width && y >= 0 && y < height)
+        return triangle[y*width + x];
+
+    return -1;
+}
+
 int main()
 {
-#define WIDTH 15
-#define HEIGHT 15
-    int triangle[HEIGHT][WIDTH] = {
-        75, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        95,64, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        17,47,82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        18,35,87,10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        20, 4,82,47,65, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        19, 1,23,75, 3,34, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        88, 2,77,73, 7,63,67, 0, 0, 0, 0, 0, 0, 0, 0,
-        99,65, 4,28, 6,16,70,92, 0, 0, 0, 0, 0, 0, 0,
-        41,41,26,56,83,40,80,70,33, 0, 0, 0, 0, 0, 0,
-        41,48,72,33,47,32,37,16,94,29, 0, 0, 0, 0, 0,
-        53,71,44,65,25,43,91,52,97,51,14, 0, 0, 0, 0,
-        70,11,33,28,77,73,17,78,39,68,17,57, 0, 0, 0,
-        91,71,52,38,17,14,91,43,58,50,27,29,48, 0, 0,
-        63,66, 4,68,89,53,67,30,73,16,69,87,40,31, 0,
-         4,62,98,27,23, 9,70,98,73,93,38,53,60, 4,23,
-    };
+    int width, height;
+    int *triangle = load_triangle("./resources/0018_triangle.txt", &width, &height);
 
-    int y = HEIGHT - 2;
+    int y = height - 2;
     int x = 0;
     while (y > 0) {
         for (int x = 0; x <= y; ++x) {
-            triangle[y][x] = max(triangle[y][x] + triangle[y + 1][x], triangle[y][x] + triangle[y + 1][x + 1]);
+            triangle[y*width + x] = max(triangle_at(triangle, x, y, width, height) + triangle_at(triangle, x, y + 1, width, height),
+                                        triangle_at(triangle, x, y, width, height) + triangle_at(triangle, x + 1, y + 1, width, height));
         }
 
         --y;
     }
-    triangle[0][0] = max(triangle[0][0] + triangle[1][0], triangle[0][0] + triangle[1][1]);
-    printf("%d\n", triangle[0][0]);
+    triangle[0] = max(triangle_at(triangle, 0, 0, width, height) + triangle_at(triangle, 0, 1, width, height),
+                      triangle_at(triangle, 0, 0, width, height) + triangle_at(triangle, 1, 1, width, height));
+    printf("%d\n", triangle[0]);
 
     return 0;
 }
