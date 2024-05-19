@@ -8,12 +8,21 @@ fi
 result=$(head -n 1 $problem_file | grep -E -o '[0-9.-]+')
 ext="${problem_file##*.}"
 
-if [[ $ext != 'c' ]]; then # non-c solutions are not allowed!
+if [[ $ext -ne 'c' || $ext -ne "cc" ]]; then # non-c/c++ solutions are not allowed!
     echo "File extension not recognized"
     exit 0
 fi
 
-gcc $problem_file -lm -lgmp -o out
+cc=""
+if [[ $ext -eq "c" ]]; then
+    cc="gcc"
+fi
+
+if [[ $ext -eq "cc" ]]; then
+    cc="g++"
+fi
+
+$cc $problem_file -lm -lgmp -o out
 output=$(./out)
 rm out
 
