@@ -6,7 +6,7 @@
 void factorial(mpz_t r, int n)
 {
     if (n == 0) {
-        mpz_set_ui(r, 0);
+        mpz_set_ui(r, 1);
         return;
     }
 
