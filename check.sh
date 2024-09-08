@@ -16,9 +16,7 @@ fi
 cc=""
 if [[ $ext -eq "c" ]]; then
     cc="gcc"
-fi
-
-if [[ $ext -eq "cc" ]]; then
+elif [[ $ext -eq "cc" ]]; then
     cc="g++"
 fi
 
