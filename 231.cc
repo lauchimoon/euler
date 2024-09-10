@@ -21,7 +21,7 @@ std::vector<bool> eratosthenes(int n)
     int top = sqrt(n);
     for (int i = 2; i < top; ++i) {
         if (primes[i]) {
-            for (int j = i*i; j < n; j += i) {
+            for (int j = i*i; j <= n; j += i) {
                 primes[j] = false;
             }
         }
