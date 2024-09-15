@@ -3,6 +3,9 @@
 #include <vector>
 #include <cmath>
 
+#define EULER_COMMON_IMPL
+#include "common.hh"
+
 int legendre(int x, int p)
 {
     int sum = 0;
@@ -12,22 +15,6 @@ int legendre(int x, int p)
     }
 
     return sum;
-}
-
-std::vector<bool> eratosthenes(int n)
-{
-    std::vector<bool> primes(n, 1);
-
-    int top = sqrt(n);
-    for (int i = 2; i < top; ++i) {
-        if (primes[i]) {
-            for (int j = i*i; j <= n; j += i) {
-                primes[j] = false;
-            }
-        }
-    }
-
-    return primes;
 }
 
 int main()
