@@ -21,7 +21,6 @@ if [[ $ext = "cc" ]]; then
     cc="g++"
 fi
 
-echo $cc
 $cc $problem_file -lm -lgmp -o out
 output=$(./out)
 rm out
