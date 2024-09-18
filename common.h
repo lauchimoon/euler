@@ -12,6 +12,7 @@ Bool *eratosthenes(unsigned int n);
 #ifdef EULER_COMMON_IMPLEMENTATION
 
 #ifndef __cplusplus
+#include <math.h>
 #include <stdlib.h>
 #include <string.h>
 
