@@ -14,13 +14,14 @@ if [[ $ext -ne 'c' || $ext -ne "cc" ]]; then # non-c/c++ solutions are not allow
 fi
 
 cc=""
-if [[ $ext -eq "c" ]]; then
+if [[ $ext = "c" ]]; then
     cc="gcc"
 fi
-if [[ $ext -eq "cc" ]]; then
+if [[ $ext = "cc" ]]; then
     cc="g++"
 fi
 
+echo $cc
 $cc $problem_file -lm -lgmp -o out
 output=$(./out)
 rm out
