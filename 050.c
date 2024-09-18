@@ -1,17 +1,15 @@
 // 997651
-#include <iostream>
-#include <vector>
-#include <cmath>
+#include <stdio.h>
 
-#define EULER_COMMON_IMPL
-#include "common.hh"
+#define EULER_COMMON_IMPLEMENTATION
+#include "common.h"
 
 int main()
 {
     int top = 1000000;
     long long int sum = 0, nterms = 0;
     int max_terms = 0, max_prime = 0;
-    std::vector<bool> primes = eratosthenes(top);
+    Bool *primes = eratosthenes(top);
     for (int i = 2; i < top; ++i) {
         sum = 0;
         nterms = 0;
@@ -32,6 +30,7 @@ int main()
         }
     }
 
-    std::cout << max_prime << "\n";
+    free(primes);
+    printf("%d\n", max_prime);
     return 0;
 }
