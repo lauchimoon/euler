@@ -1,226 +1,81 @@
 // 21124
 #include <stdio.h>
-#include <string.h>
 
-enum {
-    ZERO = 0,
-    ONE,
-    TWO,
-    THREE,
-    FOUR,
-    FIVE,
-    SIX,
-    SEVEN,
-    EIGHT,
-    NINE,
-    TEN,
-    ELEVEN,
-    TWELVE,
-    THIRTEEN,
-    FOURTEEN,
-    FIFTEEN,
-    SIXTEEN,
-    SEVENTEEN,
-    EIGHTEEN,
-    NINETEEN,
-    TWENTY,
-    THIRTY,
-    FOURTY,
-    FIFTY,
-    SIXTY,
-    SEVENTY,
-    EIGHTY,
-    NINETY,
-    HUNDRED,
-};
+#define AND 3
+#define ONETHOUSAND 11
 
-enum {
-    AND = 0,
-};
-
-char *separators[] = {
-    "and",
-};
-
-char *words[] = {
-    "zero",
-    "one",
-    "two",
-    "three",
-    "four",
-    "five",
-    "six",
-    "seven",
-    "eight",
-    "nine",
-    "ten",
-    "eleven",
-    "twelve",
-    "thirteen",
-    "fourteen",
-    "fifteen",
-    "sixteen",
-    "seventeen",
-    "eighteen",
-    "nineteen",
-    "twenty",
-    "thirty",
-    "forty",
-    "fifty",
-    "sixty",
-    "seventy",
-    "eighty",
-    "ninety",
-    "hundred",
-};
-
-int ndigits(int n)
-{
-    if (n == 0) {
-        return 1;
-    }
-
-    int dig = 0;
-    while (n != 0) {
-        n /= 10;
-        dig++;
-    }
-
-    return dig;
-}
-
-void one_digit(int n, char *buf, size_t sz)
-{
-    strncpy(buf, words[n], sz);
-}
-
-void two_digits(int n, char *buf, size_t sz)
-{
-    int first = n/10;
-    int second = n%10;
-
-    if (n < 10) {
-        one_digit(n, buf, sz);
-        return;
-    }
-
-    if (first == 1) {
-        strncpy(buf, words[n], sz);
-    } else if (first == 2) {
-        if (second == 0) {
-            // twenty
-            strncpy(buf, words[TWENTY], sz);
-        } else {
-            // twenty...
-            char tbuf[256] = { 0 };
-            one_digit(second, tbuf, sizeof(tbuf));
-            strncpy(buf, words[TWENTY], sz);
-            strncat(buf, tbuf, sz);
-        }
-    } else {
-        int offset = THIRTY + first - 3;
-        if (second == 0) {
-            strncpy(buf, words[offset], sz);
-        } else {
-            char tbuf[256] = { 0 };
-            strncpy(buf, words[offset], sz);
-            one_digit(second, tbuf, sizeof(tbuf));
-            strncat(buf, tbuf, sz);
-        }
-    }
-}
-
-void three_digits(int n, char *buf, size_t sz)
-{
-    if (n < 100) {
-        two_digits(n, buf, sz);
-        return;
-    }
-
-    int first = n/100;
-    int last_two = n - first*100;
-
-    one_digit(first, buf, sz);
-    strncat(buf, words[HUNDRED], sz);
-
-    // n != 100, 200, 300, ...?
-    if (n % 100 != 0) {
-        char tbuf[256] = { 0 };
-
-        strncat(buf, separators[AND], sz);
-        two_digits(last_two, tbuf, sizeof(tbuf));
-        strncat(buf, tbuf, sz);
-    }
-}
-
-void four_digits(int n, char *buf, size_t sz)
-{
-/*
-    const char *thousands[] = {
-        "", "mil", "dos mil", "tres mil", "cuatro mil", "cinco mil",
-        "seis mil", "siete mil", "ocho mil", "nueve mil",
-    };
-
-    int first = n/1000;
-    int last_three = n - first*1000;
-
-    // n = 1000, 2000, 3000, ...?
-    if (n % 1000 == 0) {
-        strncpy(buf, thousands[first], sz);
-    } else { // other four-digit numbers
-        char tbuf[256] = { 0 };
-        strncpy(buf, thousands[first], sz);
-        strncat(buf, separators[ESPACIO], sz);
-        three_digits(last_three, tbuf, sizeof(tbuf));
-        strncat(buf, tbuf, sz);
-    }
-}
-*/
-    strncpy(buf, "onethousand", sz);
-}
-
-void num_to_word(int n, char *buf, size_t sz)
-{
-    int digits = ndigits(n);
-    if (digits == 1) {
-        one_digit(n, buf, sz);
-    }
-    if (digits == 2) {
-        two_digits(n, buf, sz);
-    }
-    if (digits == 3) {
-        three_digits(n, buf, sz);
-    }
-    if (digits == 4) {
-        four_digits(n, buf, sz);
-    }
-}
-
-void test(int n)
-{
-    char buf[256] = { 0 };
-    num_to_word(n, buf, sizeof(buf));
-    printf("%s %d\n", buf, strlen(buf));
-}
-
-int number_letter_counts(int a, int b)
-{
-    int sum = 0;
-    char buf[512] = { 0 };
-
-    for (int i = a; i <= b; i++) {
-        num_to_word(i, buf, sizeof(buf));
-        test(i);
-        sum += strlen(buf);
-    }
-
-    return sum;
-}
+int one_digit(int);
+int two_digit(int);
+int three_digit(int);
+int compute_sum(void);
 
 int main()
 {
-    int sum = number_letter_counts(1, 1000);
-    printf("%d\n", sum);
-
+    printf("%d\n", compute_sum());
     return 0;
+}
+
+int one_digit(int n)
+{
+    int lens[9] = {
+        3, 3, 5, 4, 4, 3, 5, 5, 4
+    };
+    return lens[n - 1];
+}
+
+int two_digit(int n)
+{
+    /* multiples of ten */
+    int tens[9] = {
+        3, 6, 6, 5, 5, 5, 7, 6, 6
+    };
+
+    /* eleven to nineteen */
+    int unique[9] = {
+        6, 6, 8, 8, 7, 7, 9, 8, 8
+    };
+    if (n % 10 == 0)
+        return tens[n/10 - 1];
+    else if (n >= 11 && n <= 19)
+        return unique[n - 11];
+    else {
+        int d1 = n/10;
+        int d2 = n%10;
+        /* consider 01, 02... */
+        if (d1 == 0)
+            return one_digit(d2);
+
+        return tens[d1 - 1] + one_digit(d2);
+    }
+}
+
+int three_digit(int n)
+{
+    /* multiples of 100 */
+    int hundreds[9] = {
+        10, 10, 12, 11, 11, 10, 12, 12, 11
+    };
+    if (n % 100 == 0)
+        return hundreds[n/100 - 1];
+    else {
+        int mul = n/100;
+        int n2 = n%100;
+        return hundreds[mul - 1] + AND + two_digit(n2);
+    }
+}
+
+int compute_sum(void)
+{
+    int sum, i;
+
+    for (sum = 0, i = 1; i < 1000; ++i) {
+        if (i >= 1 && i <= 9)
+            sum += one_digit(i);
+        else if (i >= 10 && i <= 99)
+            sum += two_digit(i);
+        else if (i >= 100 && i <= 999)
+            sum += three_digit(i);
+    }
+    sum += ONETHOUSAND;
+    return sum;
 }
