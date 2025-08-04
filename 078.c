@@ -36,11 +36,8 @@ int p(ull n)
             break;
     }
 
-    mpz_t *x = malloc(sizeof(mpz_t));
-    mpz_init_set(*x, part[n]);
-
-    for (int i = 0; i <= n; ++i)
-        mpz_clear(part[i]);
+    for (int j = 0; j <= n; ++j)
+        mpz_clear(part[j]);
     free(part);
 
     return i;
