@@ -4,7 +4,7 @@
 #include <stdio.h>
 typedef char Bool; // Very dumb
 
-char **split(const char *text, char *delimiter);
+char **split(const char *text, char *delimiter, int *len);
 size_t n_lines(FILE *f);
 int *load_triangle(const char *pathname, int *width, int *height);
 Bool *eratosthenes(unsigned int n);
@@ -16,7 +16,7 @@ Bool *eratosthenes(unsigned int n);
 #include <stdlib.h>
 #include <string.h>
 
-char **split(const char *text, char *delimiter)
+char **split(const char *text, char *delimiter, int *len)
 {
     unsigned int result_size = 1;
     unsigned int result_used = 0;
@@ -33,6 +33,9 @@ char **split(const char *text, char *delimiter)
         result[result_used++] = token;
     }
     free(text_cloned);
+
+    if (len)
+        *len = result_used;
 
     return result;
 }
@@ -63,7 +66,7 @@ int *load_triangle(const char *pathname, int *width, int *height)
     int idx = 0;
     while (fgets(line, BUFFER_SIZE, f) != NULL) {
         line[strcspn(line, "\n")] = 0;
-        char **nums = split(line, " ");
+        char **nums = split(line, " ", NULL);
         char *n = nums[idx];
         n[strcspn(n, "\n")] = 0;
 

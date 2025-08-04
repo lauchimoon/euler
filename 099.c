@@ -22,7 +22,7 @@ int main()
         // trim newlines
         buffer[strcspn(buffer, "\n")] = 0;
 
-        char **exp_base = split(buffer, ",");
+        char **exp_base = split(buffer, ",", NULL);
         int base = atoi(exp_base[0]);
         int exp = atoi(exp_base[1]);
 
