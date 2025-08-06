@@ -1,6 +1,3 @@
-# My project euler solutions
+project euler solutions
 
-`check.sh`: solution checker for the problems.
-
-Dependencies:
-- libgmp: bigint business
+uses libgmp on some problems.
