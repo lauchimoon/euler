@@ -8,7 +8,7 @@ std::vector<bool> eratosthenes(int n);
 #include <cmath>
 std::vector<bool> eratosthenes(int n)
 {
-    std::vector<bool> primes(n, true);
+    std::vector<bool> primes(n + 1, true);
 
     int top = sqrt(n);
     for (int i = 2; i <= top; ++i) {
