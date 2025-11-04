@@ -1,0 +1,14 @@
+// 73162890
+The digits are in order, so find all numbers from 1 to 9 that have no predecessors.
+For instance, 1 won't be the first digit because 3 precedes it. (319)
+2 won't be the first digit because 1 precedes it. (129)
+1st digit: 7 (it has no predecessors).
+
+Repeat the process ignoring the digits you find until you use all digits from 1 to 9
+For instance, 1 won't be the second digit because 3 precedes it. (319)
+2 won't be the second digit because 1 precedes it. (129)
+2nd digit: 3 (it has 7 (or no digit) as predecessor in all numbers).
+
+3rd digit: 1 (it has 3 (or no digit) as predecessor in all numbers).
+
+Etc...
