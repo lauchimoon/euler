@@ -7,7 +7,7 @@ typedef char Bool; // Very dumb
 char **split(const char *text, char *delimiter, int *len);
 size_t n_lines(FILE *f);
 int *load_triangle(const char *pathname, int *width, int *height);
-Bool *eratosthenes(unsigned int n);
+Bool *eratosthenes(unsigned long n);
 
 #ifdef EULER_COMMON_IMPLEMENTATION
 
@@ -88,16 +88,16 @@ int *load_triangle(const char *pathname, int *width, int *height)
     return triangle;
 }
 
-Bool *eratosthenes(unsigned int n)
+Bool *eratosthenes(unsigned long n)
 {
     Bool *primes = calloc(n, sizeof(Bool));
     memset(primes, 1, n);
     primes[0] = 0;
     primes[1] = 0;
     int top = sqrt(n);
-    for (int i = 2; i <= top; ++i) {
+    for (unsigned long i = 2; i <= top; ++i) {
         if (primes[i]) {
-            for (int j = i*i; j <= n; j += i) {
+            for (unsigned long j = i*i; j <= n; j += i) {
                 primes[j] = 0;
             }
         }
