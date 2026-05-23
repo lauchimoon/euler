@@ -9,6 +9,8 @@ std::vector<bool> eratosthenes(int n);
 std::vector<bool> eratosthenes(int n)
 {
     std::vector<bool> primes(n + 1, true);
+    primes[0] = false;
+    primes[1] = false;
 
     int top = sqrt(n);
     for (int i = 2; i <= top; ++i) {
