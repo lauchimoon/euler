@@ -1,0 +1,34 @@
+#include <iostream>
+#include <numeric>
+
+using namespace std;
+using ll = long long;
+
+ll phi(ll n)
+{
+    if (n == 1)
+        return 1;
+
+    ll ans = n;
+    for (ll i = 2; i*i <= n; ++i)
+        if (n % i == 0) {
+            ans -= ans/i;
+            while (n%i == 0)
+                n /= i;
+        }
+
+    if (n > 1)
+        ans -= ans/n;
+
+    return ans;
+}
+
+int main()
+{
+#define TOP 1000000
+    ll ans = 0;
+    for (int i = 2; i <= TOP; ++i)
+        ans += phi(i);
+    cout << ans << '\n';
+    return 0;
+}
